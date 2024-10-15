@@ -18,6 +18,8 @@ import UnauthPages from "./pages/unauth-page";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
   // const isAuthenticated = false;
@@ -29,16 +31,24 @@ function App() {
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-  console.log("the user is", user);
+  if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+
+  console.log(isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <h3>Header</h3>
 
       <Routes>
+        <Route
+          path="/"
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}
+            ></CheckAuth>
+          }
+        />
         <Route
           path="/auth"
           element={

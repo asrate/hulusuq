@@ -40,6 +40,7 @@ export const checkAuth = createAsyncThunk("auth/checkauth", async () => {
       },
     }
   );
+  return response.data;
 });
 const authSlice = createSlice({
   name: "auth",
@@ -64,8 +65,6 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.pending, (state, action) => {
         state.isLoading = true;
-        state.user = null;
-        state.isAuthenticated = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -79,8 +78,6 @@ const authSlice = createSlice({
       })
       .addCase(checkAuth.pending, (state, action) => {
         state.isLoading = true;
-        state.user = null;
-        state.isAuthenticated = false;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
